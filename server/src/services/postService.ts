@@ -7,7 +7,7 @@ const getAll = async () => {
 };
 
 const getById = async (id: string) => {
-	return await Post.findById(id);
+	return await Post.findById(id).populate("parentId");
 };
 
 const create = async (postParams: IPost) => {
@@ -27,18 +27,15 @@ const create = async (postParams: IPost) => {
 	return await newPost.save();
 };
 
-const update = async (id: string, user_id: Types.ObjectId, postParams: any) => {
+const update = async (id: string, postParams: any) => {
 	const post = await Post.findById(id);
 
 	if (!post) {
 		throw "Post does not exist";
 	}
 
-	if (post.user_id.toString() !== user_id.toString()) {
-		throw "Not Authorized";
-	}
-
 	Object.assign(post, postParams);
+	post.modified_at = Date();
 	await post.save();
 };
 

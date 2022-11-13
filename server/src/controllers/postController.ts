@@ -38,6 +38,8 @@ const create = async (
 			likes: [],
 			comments: [],
 			photos,
+			created_at: Date(),
+			modified_at: Date(),
 		});
 
 		return res.json(post);
@@ -53,8 +55,11 @@ const update = async (
 ) => {
 	try {
 		const { title, content } = req.body;
+		if (req.params.id !== req.user.id.toString()) {
+			throw "Not Authorized";
+		}
 
-		await postService.update(req.params.id, req.user.id, {
+		await postService.update(req.params.id, {
 			title,
 			content,
 		});

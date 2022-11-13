@@ -16,6 +16,6 @@ router.delete("/posts/", postController._delete);
 router.put("/posts/:id/like", postController.like);
 router.put("/posts/:id/unlike", postController.unlike);
 
-router.get("/users/:id/posts", postController.getUserPosts);
+router.get("/user/:id/posts", postController.getUserPosts);
 
 export default router;

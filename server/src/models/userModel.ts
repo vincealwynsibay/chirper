@@ -5,7 +5,7 @@ export interface IUser {
 	password: string;
 	email: string;
 	birthDate: string;
-	created_at?: string;
+	created_at: string;
 	displayName: string;
 	bio: string;
 	avatar: string;

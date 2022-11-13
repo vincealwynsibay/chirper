@@ -7,6 +7,7 @@ import { connectDB } from "./config/db";
 import { verifyAuth } from "./utils/jwt";
 import userRoute from "./routes/userRoute";
 import postRoute from "./routes/postRoute";
+import commentRoute from "./routes/commentRoute";
 import {
 	uploadImage,
 	getAssetInfo,
@@ -21,8 +22,6 @@ app.use(cors());
 
 // connect database
 connectDB();
-
-// Image
 
 // routes
 app.get("/ping", (_req, res) => {
@@ -61,6 +60,7 @@ app.post(
 
 app.use(userRoute);
 app.use(postRoute);
+app.use(commentRoute);
 
 const PORT = process.env.PORT || 5000;
 
