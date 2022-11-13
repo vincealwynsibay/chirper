@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { uploadImage } from "../utils/cloudinary";
 import Comment from "../models/commentModel";
 
 const getAll = async () => {
@@ -10,7 +11,13 @@ const getById = async (id: string) => {
 };
 
 const create = async (commentParams: any) => {
-	const comment = new Comment(commentParams);
+	let photo = null;
+
+	if (commentParams.photo) {
+		photo = await uploadImage(commentParams.photo);
+	}
+
+	const comment = new Comment({ ...commentParams, photo });
 	return await comment.save();
 };
 

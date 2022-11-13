@@ -33,6 +33,7 @@ const create = async (
 			comment: parentCommentId ? parentCommentId : null,
 			content,
 			likes: [],
+			photo: req.file ? req.file.path : null,
 		};
 
 		const comment = await commentService.create(commentObject);

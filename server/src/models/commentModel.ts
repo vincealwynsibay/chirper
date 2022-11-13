@@ -4,6 +4,7 @@ export interface IComment {
 	user_id: ObjectId;
 	post_id: ObjectId;
 	content: string;
+	photo: string;
 	parentId: ObjectId | null;
 	likes: Types.ObjectId[];
 	created_at: string;
@@ -27,6 +28,7 @@ const commentSchema = new Schema<IComment>({
 		type: String,
 		required: true,
 	},
+	photo: { type: String },
 	likes: [
 		{
 			type: Types.ObjectId,
