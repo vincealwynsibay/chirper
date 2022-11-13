@@ -75,7 +75,12 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
 
 const update = (req: Request, res: Response, next: NextFunction) => {
 	try {
-		userService.update(req.params.id, req.body);
+		const userObject = {
+			...req.body,
+			avatar: req.file ? req.file.path : null,
+		};
+
+		userService.update(req.params.id, userObject);
 		return res.json({});
 	} catch (err) {
 		next(err);

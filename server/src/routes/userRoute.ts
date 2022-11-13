@@ -1,6 +1,7 @@
 import { verifyAuth } from "./../utils/jwt";
 import { Router } from "express";
 import userController from "../controllers/userController";
+import { cloudinaryUpload } from "../utils/cloudinary";
 const router = Router();
 
 // authentication routes
@@ -11,7 +12,11 @@ router.post("/auth/register", userController.register);
 // user routes
 router.get("/users/", userController.getAll);
 router.get("/users/:id", userController.getById);
-router.put("/users/:id", userController.update);
+router.put(
+	"/users/:id",
+	cloudinaryUpload.single("avatar"),
+	userController.update
+);
 router.delete("/users/:id", userController._delete);
 
 // user profile

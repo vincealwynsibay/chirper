@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User, { IUser } from "../models/userModel";
 import { Types } from "mongoose";
+import { uploadImage } from "../utils/cloudinary";
 
 // register
 const create = async (userParam: IUser) => {
@@ -55,6 +56,11 @@ const update = async (id: string, userParam: any) => {
 
 	if (!user) {
 		throw new Error("User does not exist");
+	}
+
+	if (userParam.avatar) {
+		const url = await uploadImage(userParam.avatar);
+		userParam.avatar = url;
 	}
 
 	if (
@@ -119,7 +125,7 @@ const unfollow = async (id: string, currentUserId: Types.ObjectId) => {
 			(follower) => follower.toString() === currentUserId.toString()
 		)
 	) {
-		throw "User already not followed";
+		throw "User not followed yet";
 	}
 
 	user.followers = user.followers.filter(
