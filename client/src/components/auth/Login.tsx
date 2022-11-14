@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import { Link } from "react-router-dom";
+import API from "../utils/API";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 interface Props {}
 
 function Login({}: Props) {
 	const [formData, setFormData] = useState<any>({ email: "", password: "" });
-
+	const { dispatch } = useAuthContext();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		const data = await API.fetchData("/auth/login", {
+			method: "POST",
+			body: formData,
+		});
+		localStorage.set("token", data.token);
+		dispatch({ type: "LOGIN", payload: data.user });
 	};
 
 	return (

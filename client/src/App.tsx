@@ -1,34 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useEffect } from "react";
+import Main from "./components/layout/Main";
+import Sidebar from "./components/layout/Sidebar";
+import NavigationBar from "./components/layout/NavigationBar";
+import { ThemeProvider } from "styled-components";
+import useFetch from "./hooks/useFetch";
+import { useAuthContext } from "./hooks/useAuthContext";
+
+interface Props {}
 
 function App() {
-  const [count, setCount] = useState(0)
+	// const { document, isLoading } = useFetch("http://localhost:5000/ping", {});
+	const { isAuthReady } = useAuthContext();
+	const theme = {
+		primaryColor: "",
+		secondaryColor: "",
+		accentColor: "",
+		black: "",
+		white: "",
+		gray: "",
+	};
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+	return (
+		<React.Fragment>
+			{isAuthReady ? (
+				<ThemeProvider theme={theme}>
+					<NavigationBar />
+					<Main />
+					<Sidebar />
+				</ThemeProvider>
+			) : (
+				<div>loading...</div>
+			)}
+		</React.Fragment>
+	);
 }
 
-export default App
+export default App;

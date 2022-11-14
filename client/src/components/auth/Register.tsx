@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import API from "../utils/API";
 
 interface Props {}
 
@@ -13,6 +14,10 @@ function Register({}: Props) {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		const data = await API.fetchData("/auth/register", {
+			method: "POST",
+			body: formData,
+		});
 	};
 
 	return (
