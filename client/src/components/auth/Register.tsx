@@ -18,6 +18,7 @@ function Register({}: Props) {
 			method: "POST",
 			body: formData,
 		});
+		alert("Successfully logged in!");
 	};
 
 	return (

@@ -32,7 +32,7 @@ const create = async (
 			req.files && (req.files as any).map((file: any) => file.path);
 
 		const post = await postService.create({
-			user_id: req.user.id,
+			user: req.user.id,
 			title,
 			content,
 			likes: [],

@@ -11,6 +11,8 @@ router.post("/auth/register", userController.register);
 
 // user routes
 router.get("/users/", userController.getAll);
+router.get("/users/me", verifyAuth, userController.getCurrent);
+
 router.get("/users/:id", userController.getById);
 router.put(
 	"/users/:id",

@@ -3,11 +3,11 @@ import { uploadImage } from "../utils/cloudinary";
 import Post, { IPost } from "../models/postModel";
 
 const getAll = async () => {
-	return await Post.find();
+	return await Post.find().populate("user");
 };
 
 const getById = async (id: string) => {
-	return await Post.findById(id).populate("parentId");
+	return await Post.findById(id).populate("user");
 };
 
 const create = async (postParams: IPost) => {

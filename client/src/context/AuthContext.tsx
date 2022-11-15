@@ -29,12 +29,18 @@ export function AuthProvider({ children }: Props) {
 	const [state, dispatch] = useReducer(authReducer, initialState);
 
 	useEffect(() => {
-		if (state.token) {
-			const data = API.fetchData("/users/me", {
+		const fetchData = async () => {
+			const data = await API.fetchData("/users/me", {
 				mode: "GET",
 				token: state.token,
-			}).catch();
+			});
+			console.log("user ", data);
+
 			dispatch({ type: "INIT_AUTH", payload: data });
+		};
+
+		if (state.token) {
+			fetchData();
 		} else {
 			dispatch({ type: "INIT_AUTH" });
 		}

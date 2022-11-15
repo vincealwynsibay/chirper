@@ -11,7 +11,7 @@ const create = async (userParam: IUser) => {
 		(await User.findOne({ username: userParam.username })) ||
 		(await User.findOne({ email: userParam.email }))
 	) {
-		throw `Username ${userParam.username} is already taken`;
+		throw `Username or Email is already taken`;
 	}
 	const newUser = new User(userParam);
 
@@ -25,6 +25,7 @@ const create = async (userParam: IUser) => {
 // login
 const authenticate = async (email: string, password: string) => {
 	const user = await User.findOne({ email });
+
 	if (!user) {
 		throw "User does not exist";
 	}
@@ -47,6 +48,9 @@ const getAll = async () => {
 };
 
 const getById = async (id: string) => {
+	return await User.findById(id);
+};
+const getCurrent = async (id: string) => {
 	return await User.findById(id);
 };
 
@@ -155,6 +159,7 @@ export default {
 	_delete,
 	getAll,
 	getById,
+	getCurrent,
 	follow,
 	unfollow,
 	getFollowers,

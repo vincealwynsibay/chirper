@@ -13,19 +13,28 @@ import {
 	getAssetInfo,
 	cloudinaryUpload,
 } from "./utils/cloudinary";
+import morgan from "morgan";
 const app = express();
 
 // middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
+
+app.use(morgan("tiny"));
 
 // connect database
 connectDB();
 
 // routes
 app.get("/ping", (_req, res) => {
-	res.send("ping");
+	res.json({ message: "ping" });
 });
 
 app.get("/authPing", verifyAuth, (req: IGetUserAuthInfoRequest, res) => {

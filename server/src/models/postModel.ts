@@ -2,7 +2,7 @@
 import { Schema, model, Types, ObjectId } from "mongoose";
 
 export interface IPost {
-	user_id: ObjectId;
+	user: ObjectId;
 	title: string;
 	content: string;
 	photos: string[];
@@ -13,7 +13,7 @@ export interface IPost {
 }
 
 const postSchema = new Schema<IPost>({
-	user_id: {
+	user: {
 		type: Types.ObjectId,
 		ref: "User",
 	},

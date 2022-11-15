@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Main from "./components/layout/Main";
+import MainBar from "./components/layout/MainBar";
 import Sidebar from "./components/layout/Sidebar";
 import NavigationBar from "./components/layout/NavigationBar";
 import { ThemeProvider } from "styled-components";
@@ -25,7 +25,7 @@ function App() {
 			{isAuthReady ? (
 				<ThemeProvider theme={theme}>
 					<NavigationBar />
-					<Main />
+					<MainBar />
 					<Sidebar />
 				</ThemeProvider>
 			) : (

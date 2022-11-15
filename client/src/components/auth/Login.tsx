@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../utils/API";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -13,14 +13,17 @@ function Login({}: Props) {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
+	const navigate = useNavigate();
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const data = await API.fetchData("/auth/login", {
 			method: "POST",
 			body: formData,
 		});
-		localStorage.set("token", data.token);
+		localStorage.setItem("token", data.token);
 		dispatch({ type: "LOGIN", payload: data.user });
+		navigate("/");
 	};
 
 	return (

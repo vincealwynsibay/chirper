@@ -27,18 +27,19 @@ const authenticate = async (
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { username, password, email, birthDate } = req.body;
+		const { username, password, email } = req.body;
+		console.log(username, password, email);
 
 		const userObject = {
 			username,
 			password,
 			email,
-			birthDate,
 			displayName: username,
 			bio: "",
 			avatar: gravatar.url(email, { s: "100", r: "x", d: "retro" }),
 			followers: [],
 			following: [],
+			created_at: Date(),
 		};
 
 		await userService.create(userObject);
@@ -63,6 +64,23 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await userService.getById(req.params.id);
 
+		if (user) {
+			return res.json(user);
+		} else {
+			return res.status(400).json({ message: "User not found" });
+		}
+	} catch (err) {
+		next(err);
+	}
+};
+const getCurrent = async (
+	req: IGetUserAuthInfoRequest,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		console.log(req.user.id);
+		const user = await userService.getCurrent(req.user.id);
 		if (user) {
 			return res.json(user);
 		} else {
@@ -150,6 +168,7 @@ const getFollowing = async (
 export default {
 	authenticate,
 	register,
+	getCurrent,
 	update,
 	_delete,
 	getAll,
