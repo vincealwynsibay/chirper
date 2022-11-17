@@ -14,6 +14,7 @@ import {
 	cloudinaryUpload,
 } from "./utils/cloudinary";
 import morgan from "morgan";
+import errorHandler from "./utils/errorHandler";
 const app = express();
 
 // middlewares
@@ -70,6 +71,8 @@ app.post(
 app.use(userRoute);
 app.use(postRoute);
 app.use(commentRoute);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

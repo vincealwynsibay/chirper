@@ -36,7 +36,11 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 			email,
 			displayName: username,
 			bio: "",
-			avatar: gravatar.url(email, { s: "100", r: "x", d: "retro" }),
+			avatar: `http:${gravatar.url(email, {
+				s: "100",
+				r: "x",
+				d: "retro",
+			})}`,
 			followers: [],
 			following: [],
 			created_at: Date(),
