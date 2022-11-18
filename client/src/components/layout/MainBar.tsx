@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
+import CreatePost from "../post/CreatePost";
+import PostList from "../post/PostList";
+import PostView from "../post/PostView";
 import EditProfile from "../profile/EditProfile";
 import ProfileList from "../profile/ProfileList";
 import ProfileView from "../profile/ProfileView";
@@ -30,6 +33,10 @@ function Main({}: Props) {
 						path='/profile/:profile_id/edit'
 						element={<EditProfile />}
 					/>
+					{/* Posts */}
+					<Route path='/posts/create' element={<CreatePost />} />
+					<Route path='/posts/' element={<PostList />} />
+					<Route path='/posts/:post_id' element={<PostView />} />
 				</Routes>
 			) : (
 				<div>loading...</div>

@@ -6,12 +6,9 @@ interface Props {}
 
 function PostView({}: Props) {
 	const { post_id } = useParams();
-	const { document: post, isLoading } = useFetch(
-		`http://localhost:5000/posts/${post_id}`,
-		{
-			mode: "GET",
-		}
-	);
+	const { document: post, isLoading } = useFetch(`/posts/${post_id}`, {
+		mode: "GET",
+	});
 
 	if (isLoading) {
 		return <div>loading...</div>;

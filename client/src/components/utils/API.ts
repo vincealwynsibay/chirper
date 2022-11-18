@@ -1,8 +1,11 @@
 const fetchData = async (path: string, options: any) => {
 	const baseURL = `http://localhost:5000${path}`;
 
+	const token = localStorage.getItem("token");
+	console.log(`Bearer ${token}`);
+
 	const headers = new Headers({
-		Authorization: options.token ? `Bearer ${options.token}` : "",
+		Authorization: token ? `Bearer ${token}` : "",
 	});
 
 	if (options.contentType) {

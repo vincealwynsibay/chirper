@@ -6,12 +6,9 @@ import PostItem from "./PostItem";
 interface Props {}
 
 function PostList({}: Props) {
-	const { document: posts, isLoading } = useFetch(
-		"http://localhost:5000/users/",
-		{
-			method: "GET",
-		}
-	);
+	const { document: posts, isLoading } = useFetch("/posts", {
+		method: "GET",
+	});
 
 	if (isLoading) {
 		return <div>Loading...</div>;

@@ -20,6 +20,7 @@ function NavigationBar({}: Props) {
 					<Link to='/'>Home</Link>
 					<Link to='/me'>Profile</Link>
 					<Link to='/profiles'>Profiles</Link>
+					<Link to='/posts/create'>Create Post</Link>
 					<a href='/' onClick={logout}>
 						Logout
 					</a>

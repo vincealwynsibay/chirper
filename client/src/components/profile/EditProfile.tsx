@@ -7,14 +7,15 @@ interface Props {}
 interface ProfileData {
 	displayName?: string;
 	bio?: string;
+	avatar: any;
 }
 
 function EditProfile({}: Props) {
 	const [formData, setFormData] = useState<ProfileData>({
 		displayName: "",
 		bio: "",
+		avatar: null,
 	});
-	const [avatar, setAvatar] = useState<any>(null);
 
 	const { profile_id } = useParams();
 
@@ -23,22 +24,25 @@ function EditProfile({}: Props) {
 
 		// create new form data for multipart
 		const avatarObject = new FormData();
-		avatarObject.append("avatar", avatar);
-
 		// update profile text fields
-		console.log(JSON.stringify(formData));
+		for (const [key, value] of Object.entries(formData)) {
+			if (value) {
+				console.log(key, value);
+
+				avatarObject.append(key, value);
+			}
+		}
 
 		await API.fetchData(`/users/${profile_id}`, {
 			method: "PUT",
-			body: JSON.stringify(formData),
-			contentType: "application/json",
-		});
-
-		// update profile image
-		await API.fetchData(`/users/${profile_id}/avatar`, {
-			method: "PUT",
 			body: avatarObject,
 		});
+
+		// // update profile image
+		// await API.fetchData(`/users/${profile_id}/avatar`, {
+		// 	method: "PUT",
+		// 	body: avatarObject,
+		// });
 	};
 
 	// change form state aside from input file
@@ -59,7 +63,7 @@ function EditProfile({}: Props) {
 			return null;
 		}
 
-		setAvatar((prevVal: any) => image);
+		setFormData((prevVal: any) => ({ ...prevVal, avatar: image }));
 	};
 
 	return (
