@@ -34,7 +34,6 @@ export function AuthProvider({ children }: Props) {
 				mode: "GET",
 				token: state.token,
 			});
-			console.log("user ", data);
 
 			dispatch({ type: "INIT_AUTH", payload: data });
 		};
@@ -42,7 +41,7 @@ export function AuthProvider({ children }: Props) {
 		if (state.token) {
 			fetchData();
 		} else {
-			dispatch({ type: "INIT_AUTH" });
+			dispatch({ type: "INIT_AUTH", payload: null });
 		}
 	}, []);
 

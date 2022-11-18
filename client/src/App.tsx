@@ -5,6 +5,7 @@ import NavigationBar from "./components/layout/NavigationBar";
 import { ThemeProvider } from "styled-components";
 import useFetch from "./hooks/useFetch";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { BrowserRouter } from "react-router-dom";
 
 interface Props {}
 
@@ -23,11 +24,13 @@ function App() {
 	return (
 		<React.Fragment>
 			{isAuthReady ? (
-				<ThemeProvider theme={theme}>
-					<NavigationBar />
-					<MainBar />
-					<Sidebar />
-				</ThemeProvider>
+				<BrowserRouter>
+					<ThemeProvider theme={theme}>
+						<NavigationBar />
+						<MainBar />
+						<Sidebar />
+					</ThemeProvider>
+				</BrowserRouter>
 			) : (
 				<div>loading...</div>
 			)}

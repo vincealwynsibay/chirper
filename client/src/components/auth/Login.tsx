@@ -8,6 +8,7 @@ interface Props {}
 
 function Login({}: Props) {
 	const [formData, setFormData] = useState<any>({ email: "", password: "" });
+	const [error, setError] = useState<any>(null);
 	const { dispatch } = useAuthContext();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,11 +20,17 @@ function Login({}: Props) {
 		e.preventDefault();
 		const data = await API.fetchData("/auth/login", {
 			method: "POST",
-			body: formData,
+			body: JSON.stringify(formData),
+			contentType: "application/json",
 		});
-		localStorage.setItem("token", data.token);
-		dispatch({ type: "LOGIN", payload: data.user });
-		navigate("/");
+
+		if (data.message) {
+			setError(data.message);
+		} else {
+			localStorage.setItem("token", data.token);
+			dispatch({ type: "LOGIN", payload: data.user });
+			navigate("/");
+		}
 	};
 
 	return (
@@ -41,6 +48,7 @@ function Login({}: Props) {
 						onChange={handleChange}
 					/>
 				</div>
+				{error && <p>{error}</p>}
 				<button type='submit'>Login</button>
 				<p>
 					Don't have an account yet?{" "}

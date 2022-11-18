@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import API from "../utils/API";
 
@@ -7,6 +7,8 @@ interface Props {}
 
 function Register({}: Props) {
 	const [formData, setFormData] = useState<any>({ email: "", password: "" });
+	const [error, setError] = useState<any>(null);
+	const navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,9 +18,18 @@ function Register({}: Props) {
 		e.preventDefault();
 		const data = await API.fetchData("/auth/register", {
 			method: "POST",
-			body: formData,
+			body: JSON.stringify(formData),
+			contentType: "application/json",
 		});
-		alert("Successfully logged in!");
+
+		console.log(data);
+
+		if (data.message) {
+			setError(data.message);
+		} else {
+			alert("Successfully logged in!");
+			navigate("/login");
+		}
 	};
 
 	return (
@@ -44,6 +55,7 @@ function Register({}: Props) {
 						onChange={handleChange}
 					/>
 				</div>
+				{error && <p>{error}</p>}
 				<button type='submit'>Register</button>
 				<p>
 					Already have an account?
