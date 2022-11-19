@@ -6,6 +6,7 @@ import Register from "../auth/Register";
 import CreatePost from "../post/CreatePost";
 import PostList from "../post/PostList";
 import PostView from "../post/PostView";
+import EditPost from "../post/EditPost";
 import EditProfile from "../profile/EditProfile";
 import ProfileList from "../profile/ProfileList";
 import ProfileView from "../profile/ProfileView";
@@ -37,6 +38,7 @@ function Main({}: Props) {
 					<Route path='/posts/create' element={<CreatePost />} />
 					<Route path='/posts/' element={<PostList />} />
 					<Route path='/posts/:post_id' element={<PostView />} />
+					<Route path='/posts/:post_id/edit' element={<EditPost />} />
 				</Routes>
 			) : (
 				<div>loading...</div>

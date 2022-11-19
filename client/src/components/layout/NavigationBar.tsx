@@ -21,6 +21,7 @@ function NavigationBar({}: Props) {
 					<Link to='/me'>Profile</Link>
 					<Link to='/profiles'>Profiles</Link>
 					<Link to='/posts/create'>Create Post</Link>
+					<Link to='/posts'>Posts</Link>
 					<a href='/' onClick={logout}>
 						Logout
 					</a>

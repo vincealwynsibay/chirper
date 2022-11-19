@@ -9,12 +9,12 @@ function ProfileItem({ profile }: Props) {
 	console.log(profile);
 
 	return (
-		<div>
-			<Link to={`/profiles/${profile.id}`}>
+		<Link to={`/profiles/${profile.id}`}>
+			<div>
 				<h1>username: {profile.username}</h1>
 				<p>email: {profile.email}</p>
-			</Link>
-		</div>
+			</div>
+		</Link>
 	);
 }
 

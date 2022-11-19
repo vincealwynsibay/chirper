@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
 
@@ -16,33 +16,43 @@ function EditProfile({}: Props) {
 		bio: "",
 		avatar: null,
 	});
-
 	const { profile_id } = useParams();
+
+	useEffect(() => {
+		const fetchProfile = async () => {
+			const data = await API.fetchData(`/users/${profile_id}`, {
+				method: "GET",
+			});
+			console.log(data);
+
+			setFormData((prevVal) => ({
+				...prevVal,
+				displayName: data.displayName,
+				bio: data.bio,
+			}));
+		};
+
+		fetchProfile();
+	}, []);
+
+	const { displayName, bio } = formData;
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		// create new form data for multipart
-		const avatarObject = new FormData();
+		const profileObject = new FormData();
 		// update profile text fields
 		for (const [key, value] of Object.entries(formData)) {
 			if (value) {
-				console.log(key, value);
-
-				avatarObject.append(key, value);
+				profileObject.append(key, value);
 			}
 		}
 
 		await API.fetchData(`/users/${profile_id}`, {
 			method: "PUT",
-			body: avatarObject,
+			body: profileObject,
 		});
-
-		// // update profile image
-		// await API.fetchData(`/users/${profile_id}/avatar`, {
-		// 	method: "PUT",
-		// 	body: avatarObject,
-		// });
 	};
 
 	// change form state aside from input file
@@ -70,6 +80,25 @@ function EditProfile({}: Props) {
 		<div>
 			<h2>Edit Profile</h2>
 			<form onSubmit={handleSubmit}>
+				{/* change name */}
+				<div>
+					<label>Name</label>
+					<input
+						type='text'
+						name='displayName'
+						value={displayName}
+						onChange={handleChange}
+					/>
+				</div>
+				{/* change bio */}
+				<div>
+					<label>Bio</label>
+					<textarea
+						name='bio'
+						onChange={handleChange}
+						value={bio}
+					></textarea>
+				</div>
 				{/* change avatar */}
 				<div>
 					<input
@@ -77,21 +106,6 @@ function EditProfile({}: Props) {
 						name='avatar'
 						onChange={handleAvatarChange}
 					/>
-				</div>
-
-				{/* change name */}
-				<div>
-					<label>Name</label>
-					<input
-						type='text'
-						name='displayName'
-						onChange={handleChange}
-					/>
-				</div>
-				{/* change bio */}
-				<div>
-					<label>Bio</label>
-					<textarea name='bio' onChange={handleChange}></textarea>
 				</div>
 				<button type='submit'>Save</button>
 			</form>

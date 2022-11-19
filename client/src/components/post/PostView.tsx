@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 
 interface Props {}
@@ -16,9 +16,14 @@ function PostView({}: Props) {
 
 	return (
 		<div>
+			{post.photos &&
+				post.photos.map((photo: any) => {
+					return <img src={photo} key={photo} />;
+				})}
 			<h1>{post.title}</h1>
 			<p>{post.content}</p>
 			<p>{post.user_id}</p>
+			<Link to={`/posts/${post.id}/edit`}>Edit Post</Link>
 		</div>
 	);
 }
