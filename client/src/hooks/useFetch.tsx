@@ -12,12 +12,15 @@ function useFetch(url: string, options: any) {
 				setIsLoading(true);
 				setError(null);
 
+				const token = localStorage.getItem("token");
+
+				const headers = new Headers({
+					Authorization: token ? `Bearer ${token}` : "",
+				});
+
 				const res = await fetch(`http://localhost:5000${url}`, {
 					method: options.method ? options.method : "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: options.body && JSON.stringify(options.body),
+					headers: headers,
 					signal: abortController.signal,
 					mode: "cors",
 					credentials: "omit",
