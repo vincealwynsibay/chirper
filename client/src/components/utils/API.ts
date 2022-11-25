@@ -2,7 +2,6 @@ const fetchData = async (path: string, options: any) => {
 	const baseURL = `http://localhost:5000${path}`;
 
 	const token = localStorage.getItem("token");
-	console.log(`Bearer ${token}`);
 
 	const headers = new Headers({
 		Authorization: token ? `Bearer ${token}` : "",
@@ -20,6 +19,7 @@ const fetchData = async (path: string, options: any) => {
 		credentials: "omit",
 	});
 
+	console.log(`Bearer ${token}`);
 	const data = await res.json();
 	return data;
 };

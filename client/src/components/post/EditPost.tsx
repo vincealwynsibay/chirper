@@ -23,6 +23,7 @@ function EditPost({}: Props) {
 			const data = await API.fetchData(`/posts/${post_id}`, {
 				method: "GET",
 			});
+
 			setFormData((prevVal) => ({
 				...prevVal,
 				title: data.title,
@@ -38,18 +39,10 @@ function EditPost({}: Props) {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		// create new form data for multipart
-		const postObject = new FormData();
-		// update profile text fields
-		for (const [key, value] of Object.entries(formData)) {
-			if (value) {
-				postObject.append(key, value);
-			}
-		}
-
-		await API.fetchData(`/users/${post_id}`, {
+		await API.fetchData(`/posts/${post_id}`, {
 			method: "PUT",
-			body: postObject,
+			body: JSON.stringify(formData),
+			contentType: "application/json",
 		});
 	};
 
